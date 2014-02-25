@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <EditText
+            android:id="@+id/editTextRows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/row_count"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTextCols"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editTextRows"
+            android:hint="@string/col_count"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editTextCols"
+            android:hint="@string/matrix_name"
+            android:inputType="text" >
+
+        </EditText>
+
+        </RelativeLayout>
+    
+    <HorizontalScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout3"
+        android:layout_below="@+id/relativeLayout1"
+        android:scrollbarStyle="insideInset" >
+                
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+            
+            <GridView
+	        	android:id="@+id/gridView1"
+	    	    android:layout_width="match_parent"
+		        android:layout_height="match_parent" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/confirm"
+            android:onClick="buttonConfirm_OnClick" />
+        
+        <Button
+            android:id="@+id/buttonCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/cancel"
+            android:onClick="buttonCancel_OnClick" />
+
+    </LinearLayout>
+
+</RelativeLayout>

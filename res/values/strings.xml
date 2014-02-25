@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Matrix Calc</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="matrix_name">Name</string>
+    <string name="row_count">Rows</string>
+    <string name="col_count">Columns</string>
+    <string name="confirm">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="expression">Expression</string>
+    <string name="op_add">+</string>
+    <string name="op_minus">-</string>
+    <string name="op_multi">*</string>
+    <string name="op_trans">Trans(</string>
+    <string name="add_matrix">Add</string>
+    <string name="op_equal">=</string>
+    <string name="op_backspace">BackSpace</string>
+    <string name="matrix_answer">Ans</string>
+    <string name="op_right_brac">)</string>
+    <string name="op_left_brac">(</string>
+    <string name="add_matrix_title">Add Matrix</string>
+
+</resources>
