@@ -14,7 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/row_count"
-            android:inputType="number" />
+            android:inputType="number"
+            android:imeOptions="actionNext" />
 
         <EditText
             android:id="@+id/editTextCols"
@@ -22,13 +23,15 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/editTextRows"
             android:hint="@string/col_count"
-            android:inputType="number" />
+            android:inputType="number"
+            android:imeOptions="actionNext" />
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/editTextCols"
+            android:imeOptions="flagForceAscii|actionNext"
             android:hint="@string/matrix_name"
             android:inputType="text" >
 

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zxc.matrixcalc"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -24,8 +24,13 @@
         </activity>
         
         <activity 
-            android:name="com.zxc.matrixcalc.AddMatrixActivity"
+            android:name="com.zxc.matrixcalc.AddActivity"
             android:label="@string/add_matrix_title" >
+        </activity>
+        
+        <activity 
+            android:name="com.zxc.matrixcalc.EditActivity"
+            android:label="@string/edit_matrix_title" >
         </activity>
     </application>
 

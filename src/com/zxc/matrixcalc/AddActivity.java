@@ -11,11 +11,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
-public class AddMatrixActivity extends Activity {
+public class AddActivity extends Activity {
 	
 	private EditText editTextName, editTextRows, editTextCols;
 	private GridView gridView;
-	private InputAdapter adapter;
+	private MatrixAdapter adapter;
 	private double[][] entries;
 	private int r, c;
 	
@@ -42,7 +42,7 @@ public class AddMatrixActivity extends Activity {
 			}
 		});
 		// adapter
-		adapter = new InputAdapter(this, null);
+		adapter = new MatrixAdapter(this, null);
 		// gridView
 		gridView = (GridView) findViewById(R.id.gridView1);
 		gridView.setAdapter(adapter);
@@ -63,6 +63,13 @@ public class AddMatrixActivity extends Activity {
 		ArrayList<String> mats = (ArrayList<String>) intent.getSerializableExtra("namedMats");
 		if (mats.contains(name))
 			return;
+		// Retrieve data
+		int count = gridView.getChildCount();
+		for (int i = 0; i < count; i++) {
+			EditText view = (EditText) gridView.getChildAt(i);
+			int pos = Integer.parseInt(view.getTag().toString());
+			entries[pos / c][pos % c] = Double.parseDouble(view.getText().toString());
+		}
 		// Put data into intent and return
 		intent.putExtra("name", name);
 		intent.putExtra("matrix", new Matrix(entries));

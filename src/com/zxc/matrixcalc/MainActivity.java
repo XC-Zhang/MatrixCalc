@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	private static final int PICK_MATRIX = 1;
+	private static final int EDIT_MATRIX = 2;
 	
 	private Button buttonAns;
 	private TextView textViewExpression;
@@ -37,6 +43,7 @@ public class MainActivity extends Activity {
 		expression = new LinkedList<Button>();
 		// Retrieve views
 		textViewExpression = (TextView) findViewById(R.id.textViewExpression);
+		textViewExpression.setKeyListener(null);
 		linearLayoutMats = (LinearLayout) findViewById(R.id.linearLayoutMats);
 		// Add preserved matrix ANSWER
 		namedMats.add("ANS");
@@ -56,32 +63,76 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_add_matrix :
+			addMatrix();
+			return true;
+		default :
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public void buttonAddMatrix_OnClick(View v) {
+		addMatrix();
+	}
+	
+	private void addMatrix() {
 		Intent intent = new Intent();
-		intent.setClass(this, AddMatrixActivity.class);
+		intent.setClass(this, AddActivity.class);
 		intent.putExtra("namedMats", namedMats);
-		startActivityForResult(intent, PICK_MATRIX);
+		startActivityForResult(intent, PICK_MATRIX);		
+	}
+	
+	private void editMatrix(Button b) {
+		Intent intent = new Intent();
+		intent.setClass(this, EditActivity.class);
+		intent.putExtra("name", b.getText().toString());
+		intent.putExtra("matrix", (Matrix) b.getTag());
+		startActivityForResult(intent, EDIT_MATRIX);
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK && requestCode == PICK_MATRIX) {
-			// Retrieve data from intent
-			String name = data.getStringExtra("name");
-			Matrix mat = (Matrix) data.getSerializableExtra("matrix");
-			// Add name
-			namedMats.add(name);
-			// Add a button
-			Button temp = (Button) View.inflate(this, R.layout.simple_buttonbar_button, null);
-			temp.setText(name);			
-			temp.setTag(mat);
-			temp.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					buttonMatrix_OnClick(v);
+		if (resultCode == Activity.RESULT_OK)
+			if (requestCode == PICK_MATRIX) {
+				// Retrieve data from intent
+				String name = data.getStringExtra("name");
+				Matrix mat = (Matrix) data.getSerializableExtra("matrix");
+				// Add name
+				namedMats.add(name);
+				// Add a button
+				Button temp = (Button) View.inflate(this, R.layout.simple_buttonbar_button, null);
+				temp.setText(name);			
+				temp.setTag(mat);
+				temp.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						buttonMatrix_OnClick(v);
+					}
+				});
+				temp.setOnLongClickListener(new ButtonOnLongClickListener());
+				linearLayoutMats.addView(temp);
+			} else if (requestCode == EDIT_MATRIX) {
+				// Retrieve data from intent
+				String name = data.getStringExtra("name");
+				Matrix mat = (Matrix) data.getSerializableExtra("matrix");
+				int count = linearLayoutMats.getChildCount();
+				for (int i = 0; i < count; i++) {
+					Button b = (Button) linearLayoutMats.getChildAt(i);
+					if (b.getText().toString().equals(name)) {
+						b.setTag(mat);
+						break;
+					}
 				}
-			});
-			linearLayoutMats.addView(temp);
-		}
+			}
+	}
+	
+	public void buttonRemove_OnClick(View v) {
+		expression.clear();
+		textViewExpression.setText("");
 	}
 
 	public void buttonMatrix_OnClick(View v) {
@@ -136,9 +187,13 @@ public class MainActivity extends Activity {
 		case R.id.buttonEqual :
 			if (expression.isEmpty())
 				break;
-			Matrix ans = calc();
-			buttonAns.setTag(ans);
-			showMatrix(ans);
+			try {
+				Matrix ans = calc();
+				buttonAns.setTag(ans);
+				showMatrix(ans);
+			} catch (Exception ex) {
+				Toast.makeText(this, "Expression contains errors.", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		default :
 			break;
@@ -219,6 +274,34 @@ public class MainActivity extends Activity {
 			break;
 		default :
 			break;
+		}
+	}
+	
+	private class ButtonOnLongClickListener implements OnLongClickListener, OnMenuItemClickListener {
+		private Button button;
+		@Override
+		public boolean onLongClick(View v) {
+			button = (Button) v;
+			PopupMenu menu = new PopupMenu(v.getContext(), v);
+			menu.setOnMenuItemClickListener(this);
+			menu.inflate(R.menu.edit);
+			menu.show();
+			return false;
+		}
+		@Override
+		public boolean onMenuItemClick(MenuItem item) {
+			switch (item.getItemId()) {
+			case R.id.menu_item_edit:
+				editMatrix(button);
+				break;
+			case R.id.menu_item_delete:
+				namedMats.remove(button.getText().toString());
+				linearLayoutMats.removeView(button);
+				break;
+			default:
+				break;
+			}
+			return false;
 		}
 	}
 }

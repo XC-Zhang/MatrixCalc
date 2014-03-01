@@ -4,28 +4,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textViewExpression"
+    <RelativeLayout 
+        android:id="@+id/linearLayoutExpression"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:singleLine="true"
-        android:textSize="20sp"
-        android:ems="10"
-        android:hint="@string/expression" >
-    </TextView>
-
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" >
+        
+    	<EditText
+       		android:id="@+id/textViewExpression"
+      		android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_toLeftOf="@+id/action_remove"
+        	android:padding="8dp"
+        	android:gravity="right|bottom"
+        	android:singleLine="true"
+        	android:ems="10"
+        	android:hint="@string/expression" >
+    	</EditText>
+    	
+    	<ImageButton 
+    	    android:id="@+id/action_remove"
+    	    android:layout_width="48dp"
+    	    android:layout_height="48dp"
+    	    android:layout_alignParentRight="true"
+    	    android:layout_alignBottom="@+id/textViewExpression"
+    	    android:contentDescription="@string/action_remove"
+    	    android:src="@drawable/ic_action_remove"
+    	    android:onClick="buttonRemove_OnClick"
+    	    style="?android:attr/actionButtonStyle" />
+	</RelativeLayout>
+	
     <HorizontalScrollView 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayoutMats"
-        android:layout_below="@+id/textViewExpression"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_below="@+id/linearLayoutExpression"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:scrollbarStyle="insideInset" >
         
         <LinearLayout
@@ -44,7 +61,7 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/horizontalScrollView" >
+        android:layout_above="@+id/gridLayout" >
 
         <Button
             android:id="@+id/buttonAddMatrix"
@@ -64,92 +81,79 @@
 
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+    <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:scrollbars="horizontal"
-        android:scrollbarStyle="insideInset" >
-        
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:orientation="horizontal" >
         
         <Button 
             android:id="@+id/buttonAdd" 
-            style="?android:attr/buttonBarButtonStyle" 
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" 
+            android:layout_width="48dp"
+            android:layout_height="48dp" 
             android:text="@string/op_add" 
             android:onClick="operators_OnClick" 
             android:tag="4" />
 
         <Button 
             android:id="@+id/buttonMinus" 
-            style="?android:attr/buttonBarButtonStyle" 
-            android:layout_width="wrap_content" 
-            android:layout_height="match_parent" 
+            android:layout_width="48dp" 
+            android:layout_height="48dp" 
             android:text="@string/op_minus" 
             android:onClick="operators_OnClick" 
             android:tag="4" />
 
         <Button 
             android:id="@+id/buttonMulti" 
-            style="?android:attr/buttonBarButtonStyle" 
-            android:layout_width="wrap_content" 
-            android:layout_height="match_parent" 
+            android:layout_width="48dp" 
+            android:layout_height="48dp" 
             android:text="@string/op_multi" 
             android:onClick="operators_OnClick" 
             android:tag="3" />
 
-        <Button 
-            android:id="@+id/buttonTrans" 
-            style="?android:attr/buttonBarButtonStyle" 
-            android:layout_width="wrap_content" 
-            android:layout_height="match_parent" 
-            android:text="@string/op_trans" 
-            android:onClick="operators_OnClick" 
-            android:tag="1" />
-        
         <Button
             android:id="@+id/buttonLBrac"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:text="@string/op_left_brac"
             android:onClick="operators_OnClick"
             android:tag="1" />
         
         <Button
             android:id="@+id/buttonRBrac"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:text="@string/op_right_brac"
             android:onClick="operators_OnClick"
             android:tag="5" />
 
         <Button 
-            android:id="@+id/buttonEqual" 
-            style="?android:attr/buttonBarButtonStyle" 
+            android:id="@+id/buttonTrans" 
             android:layout_width="wrap_content" 
-            android:layout_height="match_parent" 
-            android:text="@string/op_equal" 
-            android:onClick="operators_OnClick" />
-
+            android:layout_height="48dp" 
+            android:text="@string/op_trans" 
+            android:onClick="operators_OnClick" 
+            android:tag="1" />
+        
         <Button 
-            android:id="@+id/buttonBksp" 
-            style="?android:attr/buttonBarButtonStyle" 
-            android:layout_width="wrap_content" 
-            android:layout_height="match_parent" 
-            android:text="@string/op_backspace" 
+            android:id="@+id/buttonEqual" 
+            android:layout_width="48dp" 
+            android:layout_height="48dp" 
+            android:text="@string/op_equal" 
+            android:layout_row="1"
+            android:layout_column="0"
             android:onClick="operators_OnClick" />
 
-    </LinearLayout>
-    
-    </HorizontalScrollView>
-    
+        <ImageButton 
+            android:id="@+id/buttonBksp" 
+            android:layout_width="48dp" 
+            android:layout_height="48dp" 
+            android:src="@drawable/ic_action_backspace"
+            android:contentDescription="@string/op_backspace"
+            android:layout_row="1"
+            android:onClick="operators_OnClick" />
 
+    </GridLayout>
+    
 </RelativeLayout>

@@ -43,6 +43,10 @@ public class Matrix implements Serializable {
 		_e[r][c] = value;
 	}
 	
+	public double[][] getEntries() {
+		return _e.clone();
+	}
+	
 	public static Matrix Add(Matrix A, Matrix B) {
 		if (A == null || B == null)
 			throw new NullPointerException();

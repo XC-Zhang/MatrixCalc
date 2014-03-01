@@ -21,5 +21,9 @@
     <string name="op_right_brac">)</string>
     <string name="op_left_brac">(</string>
     <string name="add_matrix_title">Add Matrix</string>
+    <string name="action_remove">Remove</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="edit_matrix_title">Edit Matrix</string>
 
 </resources>

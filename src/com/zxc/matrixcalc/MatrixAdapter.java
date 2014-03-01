@@ -3,19 +3,19 @@ package com.zxc.matrixcalc;
 import android.content.Context;
 import android.text.InputType;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 
-public class InputAdapter extends BaseAdapter {
+public class MatrixAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private double[][] mEntries;
 	
-	public InputAdapter(Context c, double[][] e) {
+	public MatrixAdapter(Context c, double[][] e) {
 		mContext = c;
 		mEntries = e;
 	}
@@ -52,21 +52,14 @@ public class InputAdapter extends BaseAdapter {
 			edittext = new EditText(mContext);
 			edittext.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_NUMBER_FLAG_SIGNED);
 			edittext.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			edittext.setSingleLine(true);			
-			edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
-				@Override
-				public void onFocusChange(View view, boolean focused) {
-					if (focused)
-						return;
-					EditText edittext = (EditText) view;
-					int pos = (Integer) edittext.getTag();
-					mEntries[pos / mEntries[0].length][pos % mEntries[0].length] = Double.parseDouble(edittext.getText().toString());
-				}
-			});
+			edittext.setSingleLine(true);
+			edittext.setImeOptions(EditorInfo.IME_ACTION_NEXT);
 		} else {
 			edittext = (EditText) convertView;
 		}
-		edittext.setText(String.valueOf(mEntries[position / mEntries[0].length][position % mEntries[0].length]));
+		if (position + 1 == mEntries[0].length * mEntries[0].length)
+			edittext.setImeOptions(EditorInfo.IME_ACTION_DONE);
+		edittext.setText(Double.toString(mEntries[position / mEntries[0].length][position % mEntries[0].length]));
 		edittext.setTag(position);
 		return edittext;
 	}
